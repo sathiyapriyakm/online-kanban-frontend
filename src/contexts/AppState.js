@@ -13,7 +13,7 @@ const navigate =useNavigate();
   const [token,setToken]=useState(localStorage.getItem("token"));
 
   const getOpenTasks = () => {
-    fetch(`${API}/admin/tasks`, {
+    fetch(`${API}/admin/openTasks`, {
       method: "GET",
       headers: {
         'Content-type': 'application/json',
@@ -32,6 +32,7 @@ const navigate =useNavigate();
         setTaskList(events)
   })
   }
+
 
   const handleDelete = (deletionId) => {
     fetch(`${API}/admin/event/${deletionId}`, {

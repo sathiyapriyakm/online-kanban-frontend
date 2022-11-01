@@ -28,6 +28,18 @@ body {
   background-color: skyblue;
   /* margin-top: 10px; */
 }
+.assigneeInput{
+  width: 250px;
+  height: 30px;
+  border:none;
+}
+.searchAssignee{
+  margin: auto;
+  max-width: fit-content;
+  padding: 3px;;
+  border:2px solid lightseagreen;
+}
+
 
 .pageNotFound {
   text-align: center;

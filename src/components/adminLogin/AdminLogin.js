@@ -36,7 +36,7 @@ export function AdminLogin() {
             localStorage.setItem('userEmail', userData.Email);
             localStorage.setItem('userType', "admin");
             setToken(content.data)
-            return navigate("/AddNewTask")
+            return navigate("/AdminDashboard")
           }
             else{
               setErrorMsg(content.message)

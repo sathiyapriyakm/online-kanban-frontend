@@ -40,8 +40,8 @@ const {token} = useContext(AppContext);
   const navigate=useNavigate();
   const taskValidationSchema=yup.object({
     taskName:yup.string().required("Kindly fill the Task Name input field"),
-    assigneeEmail:yup.string().email().required("Kindly fill assignee E-mail field field").min(5,"Need a bigger poster"),
-    taskDetail:yup.string().required("Kindly provide link for task detail").min(20,"Need a bigger summary"),
+    assigneeEmail:yup.string().email().required("Kindly fill assignee E-mail field field"),
+    taskDetail:yup.string().required("Kindly provide link for task detail"),
     taskEndDate:yup.date().required("Kindly provide Task end Date"),
   })
   

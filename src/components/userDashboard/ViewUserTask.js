@@ -24,13 +24,42 @@ import DialogContent from '@mui/material/DialogContent';
 import DialogTitle from '@mui/material/DialogTitle';
 import Slide from '@mui/material/Slide';
 
-export const ViewTask = () => {
+export const ViewUserTask = () => {
     const navigate = useNavigate();
     const { token } = useContext(AppContext);
     const { taskId } = useParams();
     const [task, setTask] = useState(null);
+    const [open, setOpen] = useState(false);
+    const [openNextStage, setOpenNextStage] = useState(false);
+    const [comment, setComment] = useState("");
+    const [openStart, setOpenStart] = useState(false);
+    const [blockingPoint, setBlockingPoint] = useState("");
     const [solution, setSolution] = useState("");
     const [openSolution,setOpenSolution]=useState(false);
+   
+    const handleClickOpenStart = () => {
+        setOpenStart(true);
+    };
+
+    const handleCloseStart = () => {
+        setOpenStart(false);
+    };
+
+    const handleClickOpenNextStage = () => {
+        setOpenNextStage(true);
+    };
+
+    const handleCloseNextStage = () => {
+        setOpenNextStage(false);
+    };
+
+    const handleClickOpen = () => {
+        setOpen(true);
+    };
+
+    const handleClose = () => {
+        setOpen(false);
+    };
 
     const handleClickOpenSolution = () => {
         setOpenSolution(true);
@@ -45,7 +74,81 @@ export const ViewTask = () => {
         return <Slide direction="up" ref={ref} {...props} />;
     });
 
-    
+    const changeStage = () => {
+        handleCloseNextStage();
+        const changeTaskstatus = () => {
+            fetch(`${API}/user/changeStatus/${taskId}`, {
+                method: "PUT",
+                body: JSON.stringify({task:task,comment:comment}),
+                headers: {
+                    'Content-type': 'application/json',
+                    'Authorization': `Bearer ${token}`, // notice the Bearer before your token
+                },
+            }).then((res) => {
+                if (res.status === 401) {
+                    localStorage.removeItem("token");
+                    localStorage.removeItem("userEmail");
+                    localStorage.removeItem("userType");
+                    navigate("/");
+                }
+                return getTask();
+            })
+            // .then((mv) => setTask(mv))
+        }
+        changeTaskstatus();
+
+    }
+    const startTask = () => {
+        handleCloseStart();
+
+        const startNewTask = () => {
+            fetch(`${API}/user/startTask/${taskId}`, {
+                method: "PUT",
+                body: JSON.stringify(task),
+                headers: {
+                    'Content-type': 'application/json',
+                    'Authorization': `Bearer ${token}`, // notice the Bearer before your token
+                },
+            }).then((res) => {
+                if (res.status === 401) {
+                    localStorage.removeItem("token");
+                    localStorage.removeItem("userEmail");
+                    localStorage.removeItem("userType");
+                    navigate("/");
+                }
+                return getTask();
+            })
+            // .then((mv) => setTask(mv))
+        }
+        startNewTask();
+
+
+    }
+
+    const saveBlockingPoint = () => {
+        handleClose();
+        const saveBp = () => {
+            fetch(`${API}/user/saveBp/${taskId}`, {
+                method: "PUT",
+                body: JSON.stringify({task:task,blockingPoint:blockingPoint}),
+                headers: {
+                    'Content-type': 'application/json',
+                    'Authorization': `Bearer ${token}`, // notice the Bearer before your token
+                },
+            }).then((res) => {
+                if (res.status === 401) {
+                    localStorage.removeItem("token");
+                    localStorage.removeItem("userEmail");
+                    localStorage.removeItem("userType");
+                    navigate("/");
+                }
+                return getTask();
+            })
+            // .then((mv) => setTask(mv))
+        }
+        saveBp();
+
+    }
 
     const saveSolution = () => {
         handleCloseSolution();
@@ -170,9 +273,6 @@ export const ViewTask = () => {
                                                 <Typography variant="body2" component="div">
                                                     Deadline : {task.taskEndDate}
                                                 </Typography>
-                                                {task.startedAt?<Typography variant="body2" component="div">
-                                                    Started At : {task.startedAt}
-                                                </Typography>:<></>}
                                                 <Typography sx={{ fontWeight: 900, color: "blue" }} variant="body2" component="div">
                                                     Status: {task.taskStatus}
                                                 </Typography>
@@ -180,9 +280,8 @@ export const ViewTask = () => {
                                         </Card>
                                     </TableCell>
                                 </TableRow>
-                                {task.taskStatus==="yet to start"?<></>:<>
 
-                                { task.progress.map((state) => (
+                                {task.taskStatus === "yet to start" ? <></> : task.progress.map((state) => (
                                     <TableRow key={state.status}>
                                         <TableCell align="center" >
                                             <Card sx={{ minWidth: 275, backgroundColor: `${state.bg}` }}>
@@ -202,15 +301,72 @@ export const ViewTask = () => {
                                         </TableCell>
                                     </TableRow>
                                 ))}
-                                
-                                </>}
 
 
 
                             </TableBody>
                         </Table>
                     </TableContainer>
-                    { task.taskStatus === "Closed" ? <></> :<>
+                    { task.taskStatus === "Closed" ? <></> :
+                    <Typography>
+                        {task.taskStatus === "yet to start" ? <><Button
+                            className="user-btn"
+                            type="submit"
+                            variant="contained"
+                            color="success"
+                            style={{ marginRight: "7px" }}
+                            onClick={handleClickOpenStart}
+                        >
+                            Start
+                        </Button>
+                            <Dialog
+                                open={openStart}
+                                TransitionComponent={Transition}
+                                keepMounted
+                                onClose={handleCloseStart}
+                                aria-describedby="alert-dialog-slide-description"
+                            >
+                                <DialogContent>
+                                    Would you like to start the task?
+                                </DialogContent>
+                                <DialogActions>
+                                    <Button onClick={handleCloseStart}>No</Button>
+                                    <Button onClick={startTask}>Yes</Button>
+                                </DialogActions>
+                            </Dialog>
+
+                        </>
+                            :
+                            <Button
+                                className="user-btn"
+                                type="submit"
+                                variant="contained"
+                                color="success"
+                                style={{ marginRight: "7px" }}
+                                onClick={handleClickOpenNextStage}
+                            >
+                                Next Stage
+                            </Button>}
+                        <Dialog open={openNextStage} onClose={handleCloseNextStage} fullWidth>
+                            <DialogTitle>Comment to move to next stage</DialogTitle>
+                            <DialogContent>
+                                <TextField
+                                    autoFocus
+                                    margin="dense"
+                                    id="name"
+                                    label="comment"
+                                    type="text"
+                                    fullWidth
+                                    required
+                                    variant="outlined"
+                                    onChange={(e) => setComment(e.target.value)}
+                                />
+                            </DialogContent>
+                            <DialogActions>
+                                <Button onClick={handleCloseNextStage}>Cancel</Button>
+                                <Button onClick={changeStage}>Next State</Button>
+                            </DialogActions>
+                        </Dialog>
                         {task.blockingPoint? <>
                             <Button
                             className="user-btn"
@@ -244,15 +400,48 @@ export const ViewTask = () => {
                             </DialogActions>
                         </Dialog>
                         
-                        </> : <></>}
+                        </> : <>
+                        <Button
+                            className="user-btn"
+                            type="submit"
+                            variant="contained"
+                            color="error"
+                            onClick={handleClickOpen}
+                        >
+                            Obstacles
+                        </Button>
+                        <Dialog open={open} onClose={handleClose} fullWidth>
+                            <DialogTitle>Blocking point</DialogTitle>
+                            <DialogContent>
+                                <TextField
+                                    autoFocus
+                                    multiline
+                                    rows={3}
+                                    margin="dense"
+                                    id="name"
+                                    label="Blocking point"
+                                    type="text"
+                                    fullWidth
+                                    required
+                                    variant="outlined"
+                                    onChange={(e) => setBlockingPoint(e.target.value)}
+                                />
+                            </DialogContent>
+                            <DialogActions>
+                                <Button onClick={handleClose}>Cancel</Button>
+                                <Button onClick={saveBlockingPoint}>save</Button>
+                            </DialogActions>
+                        </Dialog></>}
 
-                        </>}
+
+
+                    </Typography>}
 
                     <ColorButton
                         className="add-user-btn"
                         type="submit"
                         variant="contained"
-                        onClick={() => navigate(-1)}
+                        onClick={() => navigate(`/UserOpenTasks`)}
                     >
                         Back
                     </ColorButton>

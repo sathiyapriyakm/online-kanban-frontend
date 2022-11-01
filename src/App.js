@@ -20,93 +20,52 @@ function App() {
         <Route path="/Register" element={<Register />} />
         <Route path="/Login" element={<Login />} />=
         <Route path="/Adminlogin" element={<AdminLogin />} />
-        
-        <Route
-          path="/Studentevents"
-          element={<MiniDrawer flow="StudentEvents" user="student" />}
-        />
-        <Route
-          path="/Studentregisteredevents"
-          element={<MiniDrawer flow="StudentRegEvents" user="student" />}
-        />
         <Route
           path="/AdminOpenTasks"
           element={<MiniDrawer flow="AdminOpenTasks" user="admin" />}
         />
         <Route
-          path="/AdminParticipants"
-          element={<MiniDrawer flow="Participants" user="admin" />}
+          path="/AdminCriticalTasks"
+          element={<MiniDrawer flow="AdminCriticalTasks" user="admin" />}
         />
+        <Route
+        path="/AdminClosedTasks"
+        element={<MiniDrawer flow="AdminClosedTasks" user="admin" />}
+      />
+        <Route
+        path="/AdminDashboard"
+        element={<MiniDrawer flow="AdminDashboard" user="admin" />}
+      />
         <Route
           path="/AddNewTask"
           element={<MiniDrawer flow="AddNewTask" user="admin" />}
         />
         <Route
-        path="/EditEvents/:eventid"
-        element={<MiniDrawer flow="EditEvents" user="admin" />}
-        /><Route
+        path="/task/edit/:taskId"
+        element={<MiniDrawer flow="EditTask" user="admin" />}
+        /> 
+        <Route
         path="/viewTask/:taskId"
         element={<MiniDrawer flow="ViewTask" user="admin" />}
-        />
-        <Route
-        path="/events/:eventid"
-        element={<MiniDrawer flow="EventTrailer" user="admin" />}
-        />
-        <Route
-        path="/events/student/:eventid"
-        element={<MiniDrawer flow="EventTrailer" user="student" />}
         /><Route
-        path="/code/:eventid/:studentid"
-        element={<MiniDrawer flow="CodeDetails" user="admin" />}
+        path="/viewUserTask/:taskId"
+        element={<MiniDrawer flow="ViewUserTask" user="student" />}
         />
         <Route
-        path="/student/code/:eventid/:studentid"
-        element={<MiniDrawer flow="CodeDetails" user="student" />}
+        path="/viewUserClosedTask/:taskId"
+        element={<MiniDrawer flow="ViewUserClosedTask" user="student" />}
         />
         <Route
-        path="/evaluvate/:eventid/:studentid"
-        element={<MiniDrawer flow="EvaluvateCode" user="admin" />}
+        path="/UserDashboard"
+        element={<MiniDrawer flow="UserDashboard" user="student" />}
         />
         <Route
-        path="/AdminResult"
-        element={<MiniDrawer flow="AdminResult" user="admin" />}
+        path="/UserOpenTasks"
+        element={<MiniDrawer flow="UserOpenTasks" user="student" />}
         />
         <Route
-        path="/SendResult/:eventid/:studentId"
-        element={<MiniDrawer flow="SendResult" user="admin" />}
-        /> 
-        <Route
-        path="/AdminNewWebinar"
-        element={<MiniDrawer flow="AdminNewWebinar" user="admin" />}
-        /> 
-        <Route
-        path="/AdminWebinar"
-        element={<MiniDrawer flow="ViewWebinar" user="admin" />}
-        />
-        
-        <Route
-        path="/EditWebinar/:eventid"
-        element={<MiniDrawer flow="EditWebinar" user="admin" />}
-        />
-         <Route
-        path="/RegisterEvents/:eventid/:email"
-        element={<MiniDrawer flow="RegStudentForEvent" user="student" />}
-        />
-        <Route
-        path="/StudentWebinar"
-        element={<MiniDrawer flow="StudentWebinar" user="student" />}
-        />
-        <Route
-        path="/Studentdashboard"
-        element={<MiniDrawer flow="StudentDashboard" user="student" />}
-        />
-        <Route
-        path="/RegisterWebinar/:eventid/:email"
-        element={<MiniDrawer flow="RegisterWebinar" user="student" />}
-        />
-        <Route
-        path="/StudentWebinarLinks"
-        element={<MiniDrawer flow="StudentWebinarLinks" user="student" />}
+        path="/UserCompletedTasks"
+        element={<MiniDrawer flow="UserCompletedTasks" user="student" />}
         />
         <Route path="/ForgetPassword" element={<ForgetPassword />} />
         <Route path="/" element={<Navigate replace to="/Login" />} />

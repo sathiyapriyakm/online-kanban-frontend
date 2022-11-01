@@ -42,7 +42,7 @@ export function Login() {
         localStorage.setItem('userEmail', userData.Email);
         localStorage.setItem('userType', "student");
         setToken(content.data)
-        return navigate("/Studentdashboard")}
+        return navigate("/UserDashboard")}
         else{
           setErrorMsg(content.message)
         }

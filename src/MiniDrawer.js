@@ -16,15 +16,17 @@ import ListItem from "@mui/material/ListItem";
 import ListItemButton from "@mui/material/ListItemButton";
 import ListItemIcon from "@mui/material/ListItemIcon";
 import ListItemText from "@mui/material/ListItemText";
-import {AdminResult} from "./components/adminDashboard/AdminResult"
-import { StudentEvents } from "components/studentDashboard/StudentEvents";
-import { StudentRegEvents } from "components/studentDashboard/StudentRegEvents";
+import { UserOpenTasks } from "components/userDashboard/UserOpenTasks";
+import { UserCompletedTasks } from "components/userDashboard/UserCompletedTasks";
 import { AdminOpenTasks } from "components/adminDashboard/AdminOpenTasks";
-import { Participants } from "components/adminDashboard/Participants";
+import { AdminDashboard } from "components/adminDashboard/AdminDashboard";
+import { AdminClosedTasks } from "components/adminDashboard/AdminClosedTasks";
+import { AdminCriticalTasks } from "components/adminDashboard/AdminCriticalTasks";
 import { AddNewTask } from "components/adminDashboard/AddNewTask";
-import { EditEvents } from "components/adminDashboard/EditEvents";
+import { EditTask } from "components/adminDashboard/EditTask";
 import { ViewTask} from "components/adminDashboard/ViewTask";
-import { RegStudentForEvent } from "components/studentDashboard/RegStudentForEvent";
+import { ViewUserTask} from "components/userDashboard/ViewUserTask";
+import {ViewUserClosedTask} from "components/userDashboard/ViewUserClosedTask"
 import LogoutIcon from "@mui/icons-material/Logout";
 import { useNavigate } from "react-router-dom";
 import Brightness7Icon from "@mui/icons-material/Brightness7";
@@ -33,87 +35,56 @@ import Button from "@mui/material/Button";
 import { useState } from "react";
 import { ThemeProvider, createTheme } from "@mui/material/styles";
 import Paper from "@mui/material/Paper";
-import EventIcon from "@mui/icons-material/Event";
-import PeopleIcon from "@mui/icons-material/People";
-import EventRepeatIcon from "@mui/icons-material/EventRepeat";
-import EventAvailableIcon from "@mui/icons-material/EventAvailable";
 import DashboardIcon from '@mui/icons-material/Dashboard';
-import { EventTrailer } from "components/adminDashboard/EventTrailer";
-import { CodeDetails } from "components/adminDashboard/CodeDetails";
-import { EvaluvateCode } from "components/adminDashboard/EvaluvateCode";
-import { StudentDashboard } from "components/studentDashboard/StudentDashboard";
-import {SendResult} from "components/adminDashboard/SendResult"
-import ForwardToInboxIcon from '@mui/icons-material/ForwardToInbox';
-import VideoCallIcon from '@mui/icons-material/VideoCall';
-import { AdminNewWebinar } from "components/adminDashboard/AdminNewWebinarEvent";
-import ViewListIcon from '@mui/icons-material/ViewList';
-import { ViewWebinar } from "components/adminDashboard/AdminWebinar";
-import { EditWebinar } from "components/adminDashboard/EditWebinar";
-import LinkIcon from '@mui/icons-material/Link';
-import WebIcon from '@mui/icons-material/Web';
-import { StudentWebinar } from "components/studentDashboard/StudentWebinar";
-import { RegisterWebinar } from "components/studentDashboard/RegisterWebinar";
-import { StudentWebinarLinks } from "components/studentDashboard/StudentWebinarLinks";
-import ImportantDevicesIcon from '@mui/icons-material/ImportantDevices';
-// import Icon from "@mui/material/Icon";
+import { UserDashboard } from "components/userDashboard/UserDashboard";
+import AssignmentOutlinedIcon from '@mui/icons-material/AssignmentOutlined';
+import AssignmentTurnedInOutlinedIcon from '@mui/icons-material/AssignmentTurnedInOutlined';
+import PlaylistAddOutlinedIcon from '@mui/icons-material/PlaylistAddOutlined';
+import AssignmentLateIcon from '@mui/icons-material/AssignmentLate';
 
 export const studentdata = [
   {
-    label: "Student Dashboard",
-    to: "/Studentdashboard",
+    label: "Dashboard",
+    to: "/UserDashboard",
     icon: "DashboardIcon",
   },
   {
-    label: "Coding Events",
-    to: "/Studentevents",
-    icon: "EventIcon",
+    label: "Open Tasks",
+    to: "/UserOpenTasks",
+    icon: "AssignmentOutlinedIcon",
   },
   {
-    label: "Participated coding Events",
-    to: "/Studentregisteredevents",
-    icon: "EventAvailableIcon",
-  },
-  {
-    label: "Webinars",
-    to: "/StudentWebinar",
-    icon: "WebIcon",
-  },{
-    label: "Registered Webinar Links",
-    to: "/StudentWebinarLinks",
-    icon: "LinkIcon",
+    label: "Completed Tasks",
+    to: "/UserCompletedTasks",
+    icon: "AssignmentTurnedInOutlinedIcon",
   },
   
 ];
 export const admindata = [
   {
-    label: "Coding Events",
+    label: "Dashboard",
+    to: "/AdminDashboard",
+    icon: "DashboardIcon",
+  },
+  {
+    label: "Open Tasks",
     to: "/AdminOpenTasks",
-    icon: "EventIcon",
+    icon: "AssignmentOutlinedIcon",
   },
   {
-    label: "Participated Events",
-    to: "/AdminParticipants",
-    icon: "PeopleIcon",
+    label: "Closed Tasks",
+    to: "/AdminClosedTasks",
+    icon: "AssignmentTurnedInOutlinedIcon",
   },
   {
-    label: "Evaluvated Events",
-    to: "/AdminResult",
-    icon: "ForwardToInboxIcon",
+    label: "Critical Tasks",
+    to: "/AdminCriticalTasks",
+    icon: "AssignmentLateIcon",
   },
   {
     label: "Create new Task",
     to: "/AddNewTask",
-    icon: "EventRepeatIcon",
-  },
-  {
-    label: "View Webinar",
-    to: "/AdminWebinar",
-    icon: "ImportantDevicesIcon",
-  },
-  {
-    label: "Add Webinar",
-    to: "/AdminNewWebinar",
-    icon: "VideoCallIcon",
+    icon: "PlaylistAddOutlinedIcon",
   },
 ];
 
@@ -213,7 +184,7 @@ export function MiniDrawer({ flow, user }) {
     <ThemeProvider theme={darkTheme}>
         <Paper
           elevation={4}
-          style={{ minHeight: "100vh", borderRadius: "0px",width:"100%" }}
+          style={{ minHeight: "100vh", borderRadius: "0px",width:"100vw" }}
         >
           <Box sx={{ display: "flex" }}>
             <CssBaseline />
@@ -248,7 +219,7 @@ export function MiniDrawer({ flow, user }) {
                   }}
                   
                 >
-                  {user === "admin" ? "Admin DashBoard" : "Student Dashboard"}
+                  {user === "admin" ? "Admin DashBoard" : "User Dashboard"}
                 </Typography>
                 <div style={{ marginLeft: "auto", paddingRight: "20px" }}>
                   <Button
@@ -336,14 +307,9 @@ export function MiniDrawer({ flow, user }) {
                           >
                             {
                               {
-                                EventIcon: <EventIcon />,
-                                EventAvailableIcon: <EventAvailableIcon />,
-                                PeopleIcon: <PeopleIcon />,
-                                EventRepeatIcon: <EventRepeatIcon />,
-                                Participants: <Participants />,
+                                AssignmentOutlinedIcon:<AssignmentOutlinedIcon/>,
+                                AssignmentTurnedInOutlinedIcon: <AssignmentTurnedInOutlinedIcon />,
                                 DashboardIcon:<DashboardIcon/>,
-                                LinkIcon:<LinkIcon/>,
-                                WebIcon:<WebIcon/>,
                               }[item.icon]
                             }
                           </ListItemIcon>
@@ -380,15 +346,11 @@ export function MiniDrawer({ flow, user }) {
                           >
                             {
                               {
-                                EventIcon: <EventIcon />,
-                                EventAvailableIcon: <EventAvailableIcon />,
-                                PeopleIcon: <PeopleIcon />,
-                                EventRepeatIcon: <EventRepeatIcon />,
-                                Participants: <Participants />,
-                                ForwardToInboxIcon:<ForwardToInboxIcon/>,
-                                VideoCallIcon:<VideoCallIcon/>,
-                                ViewListIcon:<ViewListIcon/>,
-                                ImportantDevicesIcon:<ImportantDevicesIcon/>,
+                                AssignmentOutlinedIcon:<AssignmentOutlinedIcon/>,
+                                DashboardIcon:<DashboardIcon/>,
+                                AssignmentTurnedInOutlinedIcon: <AssignmentTurnedInOutlinedIcon />,
+                                PlaylistAddOutlinedIcon:<PlaylistAddOutlinedIcon/>,
+                                AssignmentLateIcon:<AssignmentLateIcon/>,
                               }[item.icon]
                             }
                           </ListItemIcon>
@@ -409,26 +371,18 @@ export function MiniDrawer({ flow, user }) {
                     <section className="routes-container" style={{width:"100%" }}>
                       {
                         {
-                          StudentEvents: <StudentEvents />,
-                          StudentRegEvents: <StudentRegEvents />,
+                          UserOpenTasks: <UserOpenTasks />,
+                          UserCompletedTasks: <UserCompletedTasks />,
                           AdminOpenTasks: <AdminOpenTasks />,
-                          Participants: <Participants />,
+                          AdminClosedTasks:<AdminClosedTasks/>,
+                          AdminDashboard:<AdminDashboard/>,
+                          AdminCriticalTasks:<AdminCriticalTasks/>,
                           AddNewTask: <AddNewTask />,
-                          EditEvents: <EditEvents />,
+                          EditTask: <EditTask />,
                           ViewTask: <ViewTask />,
-                          EventTrailer:<EventTrailer/>,
-                          RegStudentForEvent: <RegStudentForEvent/>,
-                          CodeDetails:<CodeDetails/>,
-                          EvaluvateCode:<EvaluvateCode/>,
-                          StudentDashboard:<StudentDashboard/>,
-                          AdminResult:<AdminResult/>,
-                          SendResult:<SendResult/>,
-                          AdminNewWebinar:<AdminNewWebinar/>,
-                          ViewWebinar:<ViewWebinar/>,
-                          EditWebinar:<EditWebinar/>,
-                          StudentWebinar:<StudentWebinar/>,
-                          RegisterWebinar:<RegisterWebinar/>,
-                          StudentWebinarLinks:<StudentWebinarLinks/>,
+                          ViewUserTask: <ViewUserTask />,
+                          ViewUserClosedTask:<ViewUserClosedTask/>,
+                          UserDashboard:<UserDashboard/>,
                         }[flow]
                       }
                     </section>

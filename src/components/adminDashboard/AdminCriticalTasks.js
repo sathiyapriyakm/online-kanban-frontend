@@ -17,15 +17,14 @@ import { AppContext } from "../../contexts/AppState"
 import { API } from '../../global';
 import SearchOutlinedIcon from '@mui/icons-material/SearchOutlined';
 
-export const AdminOpenTasks = () => {
+export const AdminCriticalTasks = () => {
   const navigate = useNavigate();
-  const [asignee, setAsignee] = useState("");
   const [taskList, setTaskList] = useState(null);
 
   const { token } = useContext(AppContext);
 
-  const getOpenTasks = () => {
-    fetch(`${API}/admin/openTasks`, {
+  const getCriticalTasks = () => {
+    fetch(`${API}/admin/criticalTasks`, {
       method: "GET",
       headers: {
         'Content-type': 'application/json',
@@ -46,28 +45,7 @@ export const AdminOpenTasks = () => {
       })
   }
 
-  const handleChange = (e) => {
-    setAsignee(e.target.value);
-    getOpenTasks();
-
-  };
-  const handleKeyUp=(e)=>{
-      if (e.key === 'Enter' || e.keyCode === 13) {
-        handleSearch();
-      }
-  }
-
-  const handleSearch = () => {
-    if (asignee) {
-    let newTask=[];
-    newTask= taskList.filter((task)=>task.assigneeEmail===asignee);
-    return setTaskList(newTask);
-    }
-  }
-
-
-
-  useEffect(() => getOpenTasks(), []);
+  useEffect(() => getCriticalTasks(), []);
   return (taskList ?
     <>
       <Typography
@@ -77,26 +55,9 @@ export const AdminOpenTasks = () => {
           textAlign: "center"
         }}
       >
-        Tasks Inprogress
+        Tasks with near expected  completion date
       </Typography>
-      
-          <div className="searchAssignee">
-        <input
-        className="assigneeInput"
-          type="text"
-          placeholder="Search by Assignee email "
-          onChange={handleChange} 
-          onKeyUp={handleKeyUp}
-          />
-
-        <IconButton
-          aria-label="Event Details"
-          onClick={handleSearch}
-        >
-          <SearchOutlinedIcon />
-        </IconButton>
-        </div>
-
+         
       <TableContainer component={Paper}>
         <Table sx={{ minWidth: 650 }} aria-label="simple table" stickyHeader>
           <TableHead >

@@ -1,17 +1,31 @@
 import React from 'react'
-import { BarChart,Cell, Bar,LineChart,PieChart,Pie, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } from 'recharts';
+import { BarChart,Cell, Bar,PieChart,Pie,  XAxis, YAxis, Tooltip, ResponsiveContainer } from 'recharts';
+import {useState,useEffect} from 'react';
 
 
 
 export function ChartDashboard({userData}) {
-
+    let data2=[];
+    const [barChartData,setBarChartData]=useState(null);
     const data1=[
-        {Source:"Total Events",value:userData.totalEvents},
-        {Source:"Participated Events",value:userData.participatedEvents},
-        {Source:"Evaluvated Events",value:(+userData.participatedEvents - +userData.taskNotEval)},
+        {Source:"Total Tasks",value:userData.totalTasks},
+        {Source:"Open Tasks",value:userData.openTasks},
+        {Source:"Closed Tasks",value:userData.closedTasks},
     ]
     const COLORS=["#0275d8","#5cb85c","#5bc0de"];
-
+    const setChart=()=>{  
+        let data=[
+          {task:"TotalTasks",count:userData.totalTasks},
+          {task:"OpenTasks",count:userData.openTasks},
+          {task:"BlockedTask",count:userData.bpTasks},
+        {task:"ClosedTasks",count:userData.closedTasks},
+        {task:"CriticalTasks",count:userData.criticalTasks}
+        ]
+        setBarChartData(data);
+        
+      }
+      
+    useEffect(()=>setChart(),[]);
     
   return (
     <>
@@ -40,13 +54,12 @@ export function ChartDashboard({userData}) {
             <div className="chart-area">
         <ResponsiveContainer width="100%" height="100%">
            
-            <BarChart width={600} height={600} data={userData.taskEval}>
-    <Bar dataKey="Mark"  barSize={25} fill="#36b9cc" />
+            <BarChart width={1600} height={1600} data={barChartData}>
+    <Bar dataKey="count"  barSize={25} fill="#36b9cc" />
 
     <Tooltip/>
-    <XAxis dataKey="Event" />
+    <XAxis dataKey="task" />
     <YAxis />
-    {/* <Tooltip/> */}
   </BarChart>
        </ResponsiveContainer>
             </div>
@@ -97,13 +110,13 @@ export function ChartDashboard({userData}) {
         </div>
         <div className="mt-4 text-center small">
                 <span className="mr-2">
-                    <i className="fas fa-circle text-primary" title="Event Conducted">Total Event</i>
+                    <i className="fas fa-circle text-primary" title="Total Tasks">Total Tasks</i>
                 </span>
                 <span className="mr-2">
-                    <i className="fas fa-circle text-success" title =" Event participated">Participated Event</i>
+                    <i className="fas fa-circle text-success" title ="Open Tasks">Open Tasks</i>
                 </span>
                 <span className="mr-2">
-                    <i className="fas fa-circle text-info" title="Event Evaluvated">Evaluvated Event </i>
+                    <i className="fas fa-circle text-info" title="Closed Tasks">Closed Tasks</i>
                 </span>
             </div>
     </div>
