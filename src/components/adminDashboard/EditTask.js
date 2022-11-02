@@ -72,7 +72,9 @@ export function EditTask() {
         localStorage.removeItem("userType");
         navigate("/");
         } 
-      return navigate(`/AdminOpenTasks`)})
+      // return navigate(`/AdminOpenTasks`)
+       return navigate(-1)
+    })
     .catch((e)=>console.log("ERROR"))  
   }catch(err){
     console.log(err);

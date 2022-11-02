@@ -23,6 +23,8 @@ import DialogActions from '@mui/material/DialogActions';
 import DialogContent from '@mui/material/DialogContent';
 import DialogTitle from '@mui/material/DialogTitle';
 import Slide from '@mui/material/Slide';
+import DeleteIcon from '@mui/icons-material/Delete';
+import EditIcon from '@mui/icons-material/Edit';
 
 export const ViewTask = () => {
     const navigate = useNavigate();
@@ -30,7 +32,7 @@ export const ViewTask = () => {
     const { taskId } = useParams();
     const [task, setTask] = useState(null);
     const [solution, setSolution] = useState("");
-    const [openSolution,setOpenSolution]=useState(false);
+    const [openSolution, setOpenSolution] = useState(false);
 
     const handleClickOpenSolution = () => {
         setOpenSolution(true);
@@ -40,19 +42,36 @@ export const ViewTask = () => {
         setOpenSolution(false);
     };
 
-    
+
     const Transition = React.forwardRef(function Transition(props, ref) {
         return <Slide direction="up" ref={ref} {...props} />;
     });
 
-    
+    const handleDelete = (deletionId) => {
+        fetch(`${API}/admin/task/${deletionId}`, {
+          method: "DELETE",
+          headers: {
+            'Content-type': 'application/json',
+            'Authorization': `Bearer ${token}`, // notice the Bearer before your token
+        },
+        }).then((res) =>{
+          if(res.status===401){  
+            localStorage.removeItem("token");
+            localStorage.removeItem("userEmail");
+            localStorage.removeItem("userType");
+            navigate("/");
+            }
+        return navigate(-1);})
+      };
+      
+      
 
     const saveSolution = () => {
         handleCloseSolution();
         const saveSoln = () => {
             fetch(`${API}/user/saveSoln/${taskId}`, {
                 method: "PUT",
-                body: JSON.stringify({task:task,solution:solution}),
+                body: JSON.stringify({ task: task, solution: solution }),
                 headers: {
                     'Content-type': 'application/json',
                     'Authorization': `Bearer ${token}`, // notice the Bearer before your token
@@ -118,31 +137,54 @@ export const ViewTask = () => {
                     >
                         Task Details
                     </Typography>
-                   {task.taskStatus==="Closed"?<></> :<>
-                    {task.blockingPoint ?
-                        <Typography
-                            variant="body2"
-                            pb={2}
-                            sx={{
-                                textAlign: "center",
-                                color: "red"
-                            }}
-                        >
-                            Blocking point: {task.blockingPoint}
-                        </Typography> : <></>
-                    }
-                    {task.solution ?
-                        <Typography
-                            variant="body2"
-                            pb={2}
-                            sx={{
-                                textAlign: "center",
-                                color: "green"
-                            }}
-                        >
-                            solution: {task.solution}
-                        </Typography> : <></>
-                    }</>}
+
+                    <Typography
+                        variant="h4"
+                        pb={2}
+                        sx={{
+                            textAlign: "center"
+                        }}
+                    >
+                        <IconButton
+                            aria-label="Movie-edit-button"
+                            color="secondary"
+                            onClick={() => navigate(`/task/edit/${task._id}`)}>
+                            <EditIcon />
+                        </IconButton>
+                        <IconButton
+                            style={{ marginLeft: "auto" }}
+                            aria-label="Movie-delete-button"
+                            color="error"
+                            onClick={() => handleDelete(task._id)}>
+                            <DeleteIcon />
+                        </IconButton>
+                    </Typography>
+
+                    {task.taskStatus === "Closed" ? <></> : <>
+                        {task.blockingPoint ?
+                            <Typography
+                                variant="body2"
+                                pb={2}
+                                sx={{
+                                    textAlign: "center",
+                                    color: "red"
+                                }}
+                            >
+                                Blocking point: {task.blockingPoint}
+                            </Typography> : <></>
+                        }
+                        {task.solution ?
+                            <Typography
+                                variant="body2"
+                                pb={2}
+                                sx={{
+                                    textAlign: "center",
+                                    color: "green"
+                                }}
+                            >
+                                solution: {task.solution}
+                            </Typography> : <></>
+                        }</>}
 
 
                     <TableContainer component={Paper}>
@@ -170,9 +212,9 @@ export const ViewTask = () => {
                                                 <Typography variant="body2" component="div">
                                                     Deadline : {task.taskEndDate}
                                                 </Typography>
-                                                {task.startedAt?<Typography variant="body2" component="div">
+                                                {task.startedAt ? <Typography variant="body2" component="div">
                                                     Started At : {task.startedAt}
-                                                </Typography>:<></>}
+                                                </Typography> : <></>}
                                                 <Typography sx={{ fontWeight: 900, color: "blue" }} variant="body2" component="div">
                                                     Status: {task.taskStatus}
                                                 </Typography>
@@ -180,29 +222,29 @@ export const ViewTask = () => {
                                         </Card>
                                     </TableCell>
                                 </TableRow>
-                                {task.taskStatus==="yet to start"?<></>:<>
+                                {task.taskStatus === "yet to start" ? <></> : <>
 
-                                { task.progress.map((state) => (
-                                    <TableRow key={state.status}>
-                                        <TableCell align="center" >
-                                            <Card sx={{ minWidth: 275, backgroundColor: `${state.bg}` }}>
-                                                <CardContent>
-                                                    <Typography sx={{ mb: 1.5 }} variant="h6" component="div">
-                                                        {state.status}
-                                                    </Typography>
-                                                   {state.comments? <Typography variant="body2" component="div">
-                                                        Comments: {state.comments}
-                                                    </Typography>:<></>}
+                                    {task.progress.map((state) => (
+                                        <TableRow key={state.status}>
+                                            <TableCell align="center" >
+                                                <Card sx={{ minWidth: 275, backgroundColor: `${state.bg}` }}>
+                                                    <CardContent>
+                                                        <Typography sx={{ mb: 1.5 }} variant="h6" component="div">
+                                                            {state.status}
+                                                        </Typography>
+                                                        {state.comments ? <Typography variant="body2" component="div">
+                                                            Comments: {state.comments}
+                                                        </Typography> : <></>}
 
-                                                    {state.changedAt?<Typography variant="body2" component="div">
-                                                        Changed on : {state.changedAt}
-                                                    </Typography>:<></>}
-                                                </CardContent>
-                                            </Card>
-                                        </TableCell>
-                                    </TableRow>
-                                ))}
-                                
+                                                        {state.changedAt ? <Typography variant="body2" component="div">
+                                                            Changed on : {state.changedAt}
+                                                        </Typography> : <></>}
+                                                    </CardContent>
+                                                </Card>
+                                            </TableCell>
+                                        </TableRow>
+                                    ))}
+
                                 </>}
 
 
@@ -210,43 +252,43 @@ export const ViewTask = () => {
                             </TableBody>
                         </Table>
                     </TableContainer>
-                    { task.taskStatus === "Closed" ? <></> :<>
-                        {task.blockingPoint? <>
+                    {task.taskStatus === "Closed" ? <></> : <>
+                        {task.blockingPoint ? <>
                             <Button
-                            className="user-btn"
-                            type="submit"
-                            variant="contained"
-                            color="error"
-                            onClick={handleClickOpenSolution}
-                        >
-                           Update Solution
-                        </Button>
-                        <Dialog open={openSolution} onClose={handleCloseSolution} fullWidth>
-                            <DialogTitle>solution for Blocking point</DialogTitle>
-                            <DialogContent>
-                                <TextField
-                                    autoFocus
-                                    multiline
-                                    rows={3}
-                                    margin="dense"
-                                    id="name"
-                                    label="solution"
-                                    type="text"
-                                    fullWidth
-                                    required
-                                    variant="outlined"
-                                    onChange={(e) => setSolution(e.target.value)}
-                                />
-                            </DialogContent>
-                            <DialogActions>
-                                <Button onClick={handleCloseSolution}>Cancel</Button>
-                                <Button onClick={saveSolution}>save</Button>
-                            </DialogActions>
-                        </Dialog>
-                        
+                                className="user-btn"
+                                type="submit"
+                                variant="contained"
+                                color="error"
+                                onClick={handleClickOpenSolution}
+                            >
+                                Update Solution
+                            </Button>
+                            <Dialog open={openSolution} onClose={handleCloseSolution} fullWidth>
+                                <DialogTitle>solution for Blocking point</DialogTitle>
+                                <DialogContent>
+                                    <TextField
+                                        autoFocus
+                                        multiline
+                                        rows={3}
+                                        margin="dense"
+                                        id="name"
+                                        label="solution"
+                                        type="text"
+                                        fullWidth
+                                        required
+                                        variant="outlined"
+                                        onChange={(e) => setSolution(e.target.value)}
+                                    />
+                                </DialogContent>
+                                <DialogActions>
+                                    <Button onClick={handleCloseSolution}>Cancel</Button>
+                                    <Button onClick={saveSolution}>save</Button>
+                                </DialogActions>
+                            </Dialog>
+
                         </> : <></>}
 
-                        </>}
+                    </>}
 
                     <ColorButton
                         className="add-user-btn"
