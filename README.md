@@ -1,70 +1,51 @@
-# Getting Started with Create React App
+# [E- kanban-app](https://thriving-bombolone-79caff.netlify.app/) - MERN Stack Website
+  [Front End](https://github.com/sathiyapriyakm/online-kanban-frontend)
+  [Back End](https://github.com/sathiyapriyakm/online-kanban-backend)
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
-## Available Scripts
 
-In the project directory, you can run:
+## Brief Description
 
-### `npm start`
+E Kanban app is a web application used for achieving sychronisation in task status , blocking points and their solutions  between Team lead and Team members from their place of convenience..
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+### `Short tech summary`
+  - Implemented authentication,authorization using Json Web Token for login,along with all CRUD features.
+  -React is Used for Front end and nodeJS as Back end along with MongoDB as database  
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
 
-### `npm test`
+## Features
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
-
-### `npm run build`
-
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
-
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
-
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
-
-### `npm run eject`
-
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
-
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
-
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+### `User features`
+  - Team members can change the task status.
+  - Team members  can raise their blocking points.
+  - Team members can view their progress in dashboard in graphical representation of data.
+   
+### `Admin features`
+  - Team lead can populate task details and can assign tasks to team members.
+  - Team Lead can edit and delete tasks
+  - Team lead can address the solution for blocking points.
+  - Team lead  can get task progress details from  dashboard in graphical representation of data.
+  
+  
+## Tech Used
+  - ReactJS
+  - ExpressJS
+  - NodeJS
+  - MongoDB 
+  - JWT for Authentication
+  
+## Screenshots📷
+- Homepage
+![Homepage](/ScreenShots/Homepage.JPG "Homepage")
+- Doctor List
+![Doctor List](/ScreenShots/DoctorList.JPG "Doctor List")
+- Appoinment Form
+![Appoinment Form](/ScreenShots/AppoinmentForm.JPG "Appoinment Form")
+- Patient Appointment view
+![Patient Appointment view](/ScreenShots/Patient-App-list.JPG "Patient Appointment view")
+- Admin Add Doctor Form
+![Admin Add Doctor Form](/ScreenShots/Add-DoctorForm.JPG "Admin Add Doctor Form")
+- Admin DoctorList
+![Admin DoctorList](/ScreenShots/Admin-DoctorList.JPG "Admin DoctorList")
+- Admin Appoinment View
+![Admin Appoinment View](/ScreenShots/Admin-PatientList.JPG "Admin Appoinment View")

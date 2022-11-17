@@ -132,7 +132,7 @@ const {token} = useContext(AppContext);
         />
         <ColorButton className="add-user-btn" 
         type="submit"
-        variant="contained">ADD EVENT</ColorButton>
+        variant="contained">ADD TASK</ColorButton>
       </form> 
       </div>
     </div>;
