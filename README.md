@@ -37,14 +37,14 @@ E Kanban app is a web application used for achieving sychronisation in task stat
 ## Screenshots📷
 
 - Admin Dashboard
-![Admin Dashboard](/ScreenShots/DoctorList.JPG "Doctor List")
+![Admin Dashboard](/ScreenShots/AdminDashboard.JPG "Admin Dashboard")
 - User Dashboard
-![User Dashboard](/ScreenShots/AppoinmentForm.JPG "Appoinment Form")
+![User Dashboard](/ScreenShots/UserDashboard.JPG "User Dashboard")
 - Admin Adding new tasks
-![Admin Adding new tasks](/ScreenShots/Patient-App-list.JPG "Patient Appointment view")
+![Admin Adding new tasks](/ScreenShots/AdminAddingNewTasks.JPG "Admin Add new Task")
 - Admin viewing task progress
-![Admin viewing task progress](/ScreenShots/Add-DoctorForm.JPG "Admin Add Doctor Form")
+![Admin viewing task progress](/ScreenShots/AdminViewingTaskProgress.JPG "Admin View Task Status")
 - User changing task status
-![User changing task status](/ScreenShots/Admin-DoctorList.JPG "Admin DoctorList")
+![User changing task status](/ScreenShots/UserChangingTaskStatus.JPG "User Changing Task Status")
 - User addressing blocking points
-![User addressing blocking points](/ScreenShots/Admin-PatientList.JPG "Admin Appoinment View")
+![User addressing blocking points](/ScreenShots/UserAddressingBlockingPoints.JPG "User Raising Blocking Points")
